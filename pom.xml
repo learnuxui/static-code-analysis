@@ -25,9 +25,40 @@
                 <executable>C:\Program Files\Java\jdk1.8.0_161\bin\javac.exe</executable>
             </configuration>
         </plugin>
-
+        <!-- JSLint -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+                <execution>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                    <configuration>
+                        <target>
+                            <taskdef name="jslint" classname="com.googlecode.jslint4java.ant.JSLintTask" classpath="${settings.localRepository}/com/googlecode/jslint4java/jslint4java-ant/1.4.2/jslint4java-ant-1.4.2.jar" />
+                            <jslint options="white,browser,devel,undef,eqeqeq,plusplus,bitwise,regexp,strict,newcap,immed" haltOnFailure="false">
+                                <predef>angular</predef>
+                                <formatter type="plain" />
+                                <fileset dir="${basedir}/src/main/javascript" includes="**/*.js" />
+                            </jslint>
+                        </target>
+                    </configuration>
+                </execution>
+            </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>com.googlecode.jslint4java</groupId>
+                    <artifactId>jslint4java-ant</artifactId>
+                    <version>1.4.2</version>
+                </dependency>
+            </dependencies>
+        </plugin>
         
-         <plugin>
+        <!-- ESLint execution done through npm-->
+        <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <executions>
@@ -51,7 +82,7 @@
                         <executable>npm</executable>
                         <arguments>
                         <argument>run</argument>
-                        <argument>lint</argument>
+                        <argument>ES-LINT</argument>
                         </arguments>
                     </configuration>
                     <goals>
@@ -61,7 +92,27 @@
             </executions>
             </plugin>
 
-
+            <!-- JSHint execution done through npm-->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>exec-npm-run-jsHint</id>
+                    <phase>generate-sources</phase>
+                    <configuration>
+                        <executable>npm</executable>
+                        <arguments>
+                        <argument>run</argument>
+                        <argument>JS-HINT</argument>
+                        </arguments>
+                    </configuration>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                </execution>
+            </executions>
+            </plugin>
       
         
     </plugins>

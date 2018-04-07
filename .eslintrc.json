@@ -5,20 +5,23 @@
     "extends": "eslint:recommended",
     "rules": {
         "indent": [
-            "error",
+            1,
             4
         ],
         "linebreak-style": [
-            "error",
+            1,
             "windows"
         ],
         "quotes": [
-            "error",
+          1,
             "single"
         ],
         "semi": [
-            "error",
+          1,
             "always"
+        ],
+        "no-undef": [
+            1
         ]
     }
 }
